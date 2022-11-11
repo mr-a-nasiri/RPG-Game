@@ -1,3 +1,52 @@
+'use strict';
+
+import { knight, archer, monk, ghoul, goblin, orc, troll, undead, seeker } from '/js/Character.js';
+const playBtn = document.querySelector('.btn-play');
+const selectHeroSection = document.getElementById('select-hero');
+const selectHeroContainer = document.querySelector('#heros-container');
+const characterCards = document.getElementsByClassName('character-card');
+const battleField = document.getElementById('battle-field');
+const attackButton = document.getElementById('attack-button');
+const actionEl = document.getElementById('actions');
+
+document.getElementById('hero').innerHTML = monk.getCharacterHTML();
+document.getElementById('monster').innerHTML = ghoul.getCharacterHTML();
+
+const renderHeroSelection = function () {
+  playBtn.classList.add('hidden');
+  selectHeroSection.classList.remove('hidden');
+  selectHeroContainer.innerHTML += knight.getCharacterSelectHTML();
+  selectHeroContainer.innerHTML += archer.getCharacterSelectHTML();
+  selectHeroContainer.innerHTML += monk.getCharacterSelectHTML();
+};
+
+playBtn.addEventListener('click', renderHeroSelection);
+
+document.addEventListener('click', function (e) {
+  if (e.target.parentElement.className === 'character-card') {
+    for (const card of characterCards) {
+      card.classList.remove('selected-hero');
+    }
+    e.target.parentElement.classList.add('selected-hero');
+  }
+});
+
+document.getElementById('btn-start').addEventListener('click', function () {
+  let selectedHero;
+  for (const card of characterCards) {
+    if (card.classList.contains('selected-hero')) {
+      selectedHero = card;
+    }
+  }
+  if (selectedHero) {
+    selectHeroSection.classList.add('hidden');
+    battleField.classList.remove('hidden');
+    actionEl.classList.remove('hidden');
+    document.getElementById('hero').innerHTML = monk.getCharacterHTML();
+    document.getElementById('monster').innerHTML = ghoul.getCharacterHTML();
+  }
+});
+
 /*
 `<div class="dice">${num}</div>`).join("")
         return `<div class="health-bar-outer">
