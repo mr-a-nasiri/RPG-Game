@@ -1,5 +1,4 @@
 import characterData from '/js/data.js';
-import { getHealthBarHTML } from '/js/utils.js';
 
 class Character {
   constructor(data) {
@@ -7,14 +6,12 @@ class Character {
     this.maxHealth = this.health;
   }
 
-  getCharacterSelectHTML() {
+  getHeroPickHTML() {
     return `
       <div class="character-card" id="${this.name}">
         <img class="avatar" src="${this.avatar}" />
         <h4 class="name"> ${this.name} </h4>
-        <div class="health">Health: <b> ${this.health} <b><div>
-        <div class="attack">Attacks: <b> ${this.diceCount} <b><div>
-   
+        <div class="health">Health: ${this.health}</br>Attack Power: ${this.diceCount}<div>
       </div>
       `;
   }
@@ -29,34 +26,38 @@ class Character {
     return dicePlaceHolderHTML;
   }
 
+  getHealthBarHTML() {
+    const percent = this.health;
+    return `
+      <div class="health-bar-outer">
+        <div class="health-bar-inner ${percent < 26 ? 'danger' : ''}" 
+                style="width:${percent}%;">
+        </div>
+      </div>
+    `;
+  }
+
   getCharacterHTML() {
     return `
       <div class="character-card" id="${this.name}">
         <img class="avatar" src="${this.avatar}" />
         <h4 class="name"> ${this.name} </h4>
         <div class="health">Health: <b> ${this.health} <b><div>
-        ${getHealthBarHTML()}
-        <div class="dice-container">${this.getDicePlaceHolderHTML()}</div>
-        
-   
+        ${this.getHealthBarHTML()}
+        <div class="dice-container ${this.name.toLowerCase()}">${this.getDicePlaceHolderHTML()}</div>
       </div>
       `;
   }
 }
-{
-  // /* <div class="dice-container">${this.diceHtml}</div>; */
-}
-// ${getHealthBarHTML(this.maxHealth)}
 
-const knight = new Character(characterData.hero.knight);
-const archer = new Character(characterData.hero.archer);
-const monk = new Character(characterData.hero.monk);
+const heros = [];
+Object.keys(characterData.hero).forEach(function (character) {
+  heros.push(new Character(characterData.hero[character]));
+});
 
-const ghoul = new Character(characterData.monster.ghoul);
-const goblin = new Character(characterData.monster.goblin);
-const orc = new Character(characterData.monster.orc);
-const troll = new Character(characterData.monster.troll);
-const undead = new Character(characterData.monster.undead);
-const seeker = new Character(characterData.monster.seeker);
+const monsters = [];
+Object.keys(characterData.monster).forEach(function (character) {
+  monsters.push(new Character(characterData.monster[character]));
+});
 
-export { knight, archer, monk, ghoul, goblin, orc, troll, undead, seeker };
+export { heros, monsters };

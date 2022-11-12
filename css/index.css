@@ -112,7 +112,8 @@ main {
   }
 } */
 
-.health {
+.health,
+.attack {
   font-size: 1.1rem;
   font-weight: normal;
   width: 90%;
@@ -123,7 +124,8 @@ main {
 }
 
 @media (min-width: 550px) {
-  .health {
+  .health,
+  .attack {
     margin: 2vh 5%;
   }
 }
@@ -150,10 +152,6 @@ main {
 
 .health-bar-outer .health-bar-inner.danger {
   background: #d1435f;
-}
-
-.attack {
-  font-weight: 400;
 }
 
 .dice-container {
@@ -184,7 +182,7 @@ main {
   background: #fff;
   border-radius: 5px;
   border: 1px solid #666;
-  color: #000721;
+  color: #fff;
   text-align: center;
   line-height: 6vh;
 }
